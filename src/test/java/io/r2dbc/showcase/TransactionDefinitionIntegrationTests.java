@@ -53,12 +53,15 @@ class TransactionDefinitionIntegrationTests {
 
 		Flux.usingWhen(connectionFactory.create(), conn -> {
 
-			PostgresTransactionDefinition definition = PostgresTransactionDefinition
-					.from(IsolationLevel.SERIALIZABLE)
-					.deferrable()
-					.readOnly();
+			// PostgresTransactionDefinition
+			return Flux.empty();
 
-			return conn.beginTransaction(definition);
+
+
+
+
+
+
 		}, Connection::close)
 				.blockLast();
 	}
@@ -70,7 +73,16 @@ class TransactionDefinitionIntegrationTests {
 
 		Flux.usingWhen(connectionFactory.create(), conn -> {
 
-			return conn.beginTransaction(IsolationLevel.SERIALIZABLE);
+			// IsolationLevel.SERIALIZABLE
+
+
+
+
+			return Flux.empty();
+
+
+
+
 		}, Connection::close)
 				.blockLast();
 	}

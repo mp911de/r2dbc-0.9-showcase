@@ -76,7 +76,29 @@ class ResultSegmentsIntegrationTests {
 					.execute()
 					.flatMap(it -> it.flatMap(segment -> {
 
-						if (segment instanceof Result.UpdateCount) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+						/*if (segment instanceof Result.UpdateCount) {
 							return Mono.just("Count: " + ((Result.UpdateCount) segment)
 									.value());
 						}
@@ -94,7 +116,7 @@ class ResultSegmentsIntegrationTests {
 						if (segment instanceof Result.Message) {
 							return Mono.just("Message: " + ((Result.Message) segment)
 									.message());
-						}
+						} */
 
 						return Mono.empty();
 					}));

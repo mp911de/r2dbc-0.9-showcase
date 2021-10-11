@@ -49,10 +49,10 @@ class StatementTimeoutIntegrationTests {
 
 		Flux.usingWhen(connectionFactory.create(), conn -> {
 
-			return conn.setStatementTimeout(Duration.ofSeconds(1))
-					.thenMany(conn.createStatement("SELECT pg_sleep(10)")
-							.execute()
-							.concatMap(PostgresqlResult::getRowsUpdated));
+			return Flux.empty(); // SELECT pg_sleep(10)
+
+
+
 		}, Connection::close)
 				.as(StepVerifier::create)
 				.verifyError(R2dbcNonTransientResourceException.class);
