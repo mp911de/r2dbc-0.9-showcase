@@ -17,6 +17,8 @@ package io.r2dbc.showcase;
 
 import io.r2dbc.mssql.MssqlConnectionFactory;
 import io.r2dbc.spi.Connection;
+import io.r2dbc.spi.Parameters;
+import io.r2dbc.spi.R2dbcType;
 import reactor.core.publisher.Flux;
 import reactor.test.StepVerifier;
 
@@ -64,7 +66,13 @@ class StoredProceduresIntegrationTests {
 
 		Flux.usingWhen(connectionFactory.create(), conn -> {
 
-			return Flux.empty();
+			return conn.createStatement("EXEC test_proc @P0, @Greeting OUTPUT")
+					.bind("@P0", "Walter")
+					.bind("@Greeting", Parameters.out(R2dbcType.VARCHAR))
+					.execute()
+					.flatMap(it -> it.map((readable) -> {
+						return readable.get(0);
+					}));
 
 		}, Connection::close)
 				.as(StepVerifier::create)

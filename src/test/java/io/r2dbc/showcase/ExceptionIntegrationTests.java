@@ -50,25 +50,19 @@ class ExceptionIntegrationTests {
 
 		Flux.usingWhen(connectionFactory.create(), conn -> {
 
-
-
-
-
-
-
-
-
-
-			
-
-			return Flux.empty();
+			return conn.createStatement("foo bar baz")
+					.execute()
+					.flatMap(it -> it.map(r -> "some string"));
 
 		}, Connection::close)
 				.as(StepVerifier::create)
 				.consumeErrorWith(e -> {
 
+					assertInstanceOf(R2dbcBadGrammarException.class, e);
 
-					// assertEquals("…", ex);
+					R2dbcBadGrammarException ex = (R2dbcBadGrammarException) e;
+
+					assertEquals("foo bar baz", ex.getOffendingSql());
 
 				}).verify();
 	}

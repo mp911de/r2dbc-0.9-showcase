@@ -63,7 +63,14 @@ class ParametersIntegrationTests {
 
 	private Flux<?> showcase(PostgresqlConnection conn) {
 
-		return Flux.empty();
+		return PostgresTypes.from(conn).lookupType("my_enum").flatMapMany(type -> {
+
+			return conn.createStatement("INSERT INTO enum_test VALUES($1)")
+					.bind("$1", Parameters.in(type, "HELLO"))
+					.execute()
+					.concatMap(PostgresqlResult::getRowsUpdated);
+
+		});
 	}
 
 	@Test
