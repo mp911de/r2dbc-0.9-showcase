@@ -19,15 +19,9 @@
 			<dependency>
 				<groupId>io.r2dbc</groupId>
 				<artifactId>r2dbc-bom</artifactId>
-				<version>Borca-M2</version>
+				<version>Borca-BUILD-SNAPSHOT</version>
 				<type>pom</type>
 				<scope>import</scope>
-			</dependency>
-
-			<dependency>
-				<groupId>io.r2dbc</groupId>
-				<artifactId>r2dbc-spi</artifactId>
-				<version>0.9.0.BUILD-SNAPSHOT</version>
 			</dependency>
 
 			<dependency>
